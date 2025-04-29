@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>2</version>
+  <attributes/>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes/>
+      <pos x="460" y="120"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes/>
+      <pos x="460" y="180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>LED</elementName>
+      <elementAttributes/>
+      <pos x="640" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>External</elementName>
+      <elementAttributes>
+        <entry>
+          <string>applicationType</string>
+          <appType>GHDL</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>primeiro</string>
+        </entry>
+        <entry>
+          <string>externalInputs</string>
+          <string>a,b</string>
+        </entry>
+        <entry>
+          <string>Code</string>
+          <string>LIBRARY ieee;
+USE IEEE.std_logic_1164.ALL;
+
+ENTITY primeiro IS
+
+    PORT (
+        a, b : IN STD_LOGIC;
+        s : OUT STD_LOGIC
+
+    );
+END ENTITY primeiro;
+
+ARCHITECTURE comp_primeiro OF primeiro IS
+BEGIN
+
+    s &lt;= a AND b;
+
+END comp_primeiro;</string>
+        </entry>
+        <entry>
+          <string>externalOutputs</string>
+          <string>s</string>
+        </entry>
+      </elementAttributes>
+      <pos x="540" y="140"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="600" y="160"/>
+      <p2 x="640" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="180"/>
+      <p2 x="540" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="120"/>
+      <p2 x="520" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="520" y="140"/>
+      <p2 x="540" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="520" y="120"/>
+      <p2 x="520" y="140"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>

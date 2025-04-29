@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>2</version>
+  <attributes/>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>a</string>
+        </entry>
+      </elementAttributes>
+      <pos x="460" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>b</string>
+        </entry>
+      </elementAttributes>
+      <pos x="460" y="220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>LED</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Color</string>
+          <awt-color>
+            <red>0</red>
+            <green>153</green>
+            <blue>153</blue>
+            <alpha>255</alpha>
+          </awt-color>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>sum</string>
+        </entry>
+      </elementAttributes>
+      <pos x="680" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>LED</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>carry</string>
+        </entry>
+      </elementAttributes>
+      <pos x="680" y="240"/>
+    </visualElement>
+    <visualElement>
+      <elementName>External</elementName>
+      <elementAttributes>
+        <entry>
+          <string>applicationType</string>
+          <appType>GHDL</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>fullh</string>
+        </entry>
+        <entry>
+          <string>externalInputs</string>
+          <string>a_full,b_full</string>
+        </entry>
+        <entry>
+          <string>Code</string>
+          <string>LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+
+ENTITY fullh IS
+    PORT (
+        a_full, b_full : IN STD_LOGIC;
+        s_full, carry_out : OUT STD_LOGIC
+    );
+END ENTITY fullh;
+
+ARCHITECTURE comp_full OF fullh IS
+    COMPONENT helf2
+        PORT (
+            a, b : IN STD_LOGIC;
+            s, carry : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
+    SIGNAL s1, c1, c2 : STD_LOGIC;
+BEGIN
+    ha1 : helf2 PORT MAP(
+        a =&gt; a_f,
+        b =&gt; b_f,
+        carry =&gt; c1,
+        s =&gt; s1
+    );
+    ha2 : helf2 PORT MAP(
+        a =&gt; s1,
+        b =&gt; carry_in,
+        carry =&gt; c2,
+        s =&gt; sum_f
+    );
+    ----------------------------------------------------------
+    ----------------------------------------------------------
+    LIBRARY IEEE;
+    USE IEEE.std_logic_1164.ALL;
+
+    ENTITY helf2 IS
+        PORT (
+            a, b : IN STD_LOGIC;
+            s, carry : OUT STD_LOGIC
+        );
+    END ENTITY helf2;
+
+    ARCHITECTURE algoritmo OF somador IS
+    BEGIN
+        PROCESS (a, b)
+        BEGIN
+            IF (a = &apos;1&apos; AND b = &apos;0&apos;) THEN
+                s &lt;= &apos;1&apos;;
+                carry &lt;= &apos;0&apos;;
+            ELSIF (a = &apos;0&apos; AND b = &apos;1&apos;) THEN
+                s &lt;= &apos;1&apos;;
+                carry &lt;= &apos;0&apos;;
+            ELSIF (a = &apos;1&apos; AND b = &apos;1&apos;) THEN
+                s &lt;= &apos;0&apos;;
+                carry &lt;= &apos;1&apos;;
+            ELSIF (a = &apos;0&apos; AND b = &apos;0&apos;) THEN
+                s &lt;= &apos;0&apos;;
+                carry &lt;= &apos;0&apos;;
+            END IF;
+        END PROCESS;
+    END algoritmo;</string>
+        </entry>
+        <entry>
+          <string>externalOutputs</string>
+          <string>s_full,carry_out</string>
+        </entry>
+      </elementAttributes>
+      <pos x="520" y="180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Testcase</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>Teste</string>
+        </entry>
+        <entry>
+          <string>Testdata</string>
+          <testData>
+            <dataString>a b sum carry
+0 0 0 0
+1 0 1 0
+0 1 1 0
+1 1 0 1</dataString>
+          </testData>
+        </entry>
+      </elementAttributes>
+      <pos x="500" y="0"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="460" y="160"/>
+      <p2 x="500" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="160"/>
+      <p2 x="680" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="240"/>
+      <p2 x="680" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="180"/>
+      <p2 x="520" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="180"/>
+      <p2 x="640" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="200"/>
+      <p2 x="520" y="200"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="200"/>
+      <p2 x="640" y="200"/>
+    </wire>
+    <wire>
+      <p1 x="460" y="220"/>
+      <p2 x="480" y="220"/>
+    </wire>
+    <wire>
+      <p1 x="480" y="200"/>
+      <p2 x="480" y="220"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="160"/>
+      <p2 x="640" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="200"/>
+      <p2 x="640" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="160"/>
+      <p2 x="500" y="180"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>
