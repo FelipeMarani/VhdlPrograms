@@ -8,7 +8,7 @@ ENTITY barramento IS
         req0, req1, req2, req3 : IN STD_LOGIC;--Requisições 
         aut0, aut1, aut2, aut3 : OUT STD_LOGIC;--estado de autorização
         init : IN STD_LOGIC--controle de inicialização
-    )
+    );
 END ENTITY barramento;
 ARCHITECTURE behavior OF barramento IS
     TYPE tpEstado IS (initial, ext0, ext1, ext2, ext3);
@@ -27,10 +27,10 @@ BEGIN
     BEGIN
 
         --pré-definição dos estados de saída
-        ext0 = '000000001';
-        ext1 = '000000010';
-        ext2 = '000000100';
-        ext3 = '000001000';
+        ext0 <= '1';
+        ext1 <= '1';
+        ext2 <= '1';
+        ext3 <= '1';
 
         --pré-definição do estados de autorização
         aut0 <= '0';
@@ -41,7 +41,7 @@ BEGIN
         CASE estado_atual IS
             WHEN initial =>
                 IF init = '1' THEN
-                    IF priority = '0' THEN--tratamento para prioridade inativa
+                    IF priority = '0' THEN -- prioridade inativa
                         IF req0 = '1' THEN
                             prox_estado <= ext0;
                         ELSIF req1 = '1' THEN
@@ -52,9 +52,8 @@ BEGIN
                             prox_estado <= ext3;
                         ELSE
                             prox_estado <= initial;
-                        END IF;
-                    ELSE
-                        priority <= '1';--tratamento para a prioridade ativa
+                        END IF; -- fim prioridade inativa
+                    ELSE -- prioridade ativa
                         IF req0 = '1' THEN
                             prox_estado <= ext0;
                         ELSIF req1 = '1' THEN
@@ -65,35 +64,47 @@ BEGIN
                             prox_estado <= ext3;
                         ELSE
                             prox_estado <= initial;
-                        END IF;
-        END IF;
-                --Tratamento para a troca de requisição entre barramentos
-            when ext0 => aut0 <= '1';
-                if req0 = '0' then
+                        END IF; -- fim prioridade ativa
+                    END IF; -- fim do IF priority
+                ELSE
                     prox_estado <= initial;
-                    else
-                        prox_estado <= ext0;
-                    end if;
-            when ext1 => aut1 <= '1';
-                if req1 = '0' then
+                END IF; -- fim do IF init
+
+            WHEN ext0 =>
+                aut0 <= '1';
+                IF req0 = '0' THEN
                     prox_estado <= initial;
-                    else
-                        prox_estado <= ext1;
-                    end if;
-            when ext2 => aut2 <= '1';
-                if req2 = '0' then
+                ELSE
+                    prox_estado <= ext0;
+                END IF;
+
+            WHEN ext1 =>
+                aut1 <= '1';
+                IF req1 = '0' THEN
                     prox_estado <= initial;
-                    else
-                        prox_estado <= ext2;
-                    end if;
-            when ext3 => aut3 <= '1';
-                if req3 = '0' then
+                ELSE
+                    prox_estado <= ext1;
+                END IF;
+
+            WHEN ext2 =>
+                aut2 <= '1';
+                IF req2 = '0' THEN
                     prox_estado <= initial;
-                    else
-                        prox_estado <= ext3;
-                    end if;
-            when others =>
+                ELSE
+                    prox_estado <= ext2;
+                END IF;
+
+            WHEN ext3 =>
+                aut3 <= '1';
+                IF req3 = '0' THEN
+                    prox_estado <= initial;
+                ELSE
+                    prox_estado <= ext3;
+                END IF;
+
+            WHEN OTHERS =>
                 prox_estado <= initial;
         END CASE;
+
     END PROCESS;
 END ARCHITECTURE behavior;
