@@ -12,7 +12,7 @@ BEGIN
     PROCESS (EN, A)
     BEGIN
         IF (En = '1') THEN
-            Y_L <= (OTHERS => '1');
+            -- Y_L <= (OTHERS => '1');
             CASE A IS
                 WHEN "00" => Y_L(0) <= '0';
                 WHEN "01" => Y_L(1) <= '0';
